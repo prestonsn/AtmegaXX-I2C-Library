@@ -1,7 +1,5 @@
-# AVR-AtmegaXX
-I2C sensors, OLED libraries, Interface drivers for the ATmegaXX family. 
-Libraries for AVR microcontrollers. SSD1306-OLED, HMC5883L, TWI, IIC.
-DS3231 RTC, Shift registers. And a Millis() implementation from Arduino(uses Timer 0).
-
+# AtmegaXX-I2C-Library
 This code was written for the ATmega16, but works on the ATmega2560, 8, and 32. 
-And with some modification, the "higher-level" driver software can be reused for other Microcontrollers.
+Used to interface I2C devices on the I2C bus of the ATmega. For AVR devices with multiple I2C interfaces, some modification will be required.
+
+-NULLWolf.
