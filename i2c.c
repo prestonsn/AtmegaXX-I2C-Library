@@ -142,7 +142,7 @@ uint8_t i2c_tx_byte(uint8_t byteData)
     return status;
 }
 
-bool i2c_timeout(void)
+int8_t i2c_timeout(void)
 {
     uint8_t time = TIMEOUT;
     int8_t status = BUS_DISCONNECTED;

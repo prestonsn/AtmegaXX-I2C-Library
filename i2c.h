@@ -10,7 +10,7 @@
 #ifndef i2c_h
 #define i2c_h
 
-#define F_I2C 25000L
+#define F_I2C 100000LL
 #define TRANSMISSION_SUCCESS -1
 #define TRANSMISSION_ERROR -2
 #define BUS_CONNECTED -3
@@ -89,7 +89,7 @@ uint8_t i2c_tx_byte(uint8_t byteData);
  * Returns:
  *     Timeout status
  */
-bool i2c_timeout(void);
+int8_t i2c_timeout(void);
 
 /*
  * Receive byte of data
