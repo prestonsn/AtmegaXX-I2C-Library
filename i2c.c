@@ -160,8 +160,8 @@ uint8_t i2c_rx_byte(bool response)
 {
     int8_t status;
 
-    /* clear interrupt flag */
-    TWCR |= (1 << TWINT) | ((response & 0xFE) << TWEA);
+    /* clear interrupt flag and set response type */
+    TWCR = (1 << TWINT) | ((response & 0xFE) << TWEA) | (1 << TWEN);
 
     /* detect bus time-out */
     if (i2c_timeout() != BUS_DISCONNECTED) {
