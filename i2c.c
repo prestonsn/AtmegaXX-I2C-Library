@@ -54,10 +54,8 @@ uint8_t i2c_tx_address(uint8_t address)
     int8_t status = 0;
 
     TWDR = (address << 1) | masterMode;
-    /* clear start command to release bus as master */
-    TWCR &= ~(1 << TWSTA);
-    /* clear interrupt flag */
-    TWCR |=  (1 << TWINT);
+    /* clear interrupt and enable */
+    TWCR = (1 << TWINT | 1 << TWEN);
 
     /* wait until address transmitted */
     while (!(TWCR & (1 << TWINT)));
@@ -162,14 +160,8 @@ uint8_t i2c_rx_byte(bool response)
 {
     int8_t status;
 
-    if (response == ACK) {
-        TWCR |= (1 << TWEA); // generate ACK
-    } else {
-        TWCR &= ~(1 << TWEA); // generate NACK
-    }
-
-    /* clear interrupt flag */
-    TWCR |= (1 << TWINT);
+    /* clear interrupt flag and set response type */
+    TWCR = (1 << TWINT) | ((response & 0xFE) << TWEA) | (1 << TWEN);
 
     /* detect bus time-out */
     if (i2c_timeout() != BUS_DISCONNECTED) {
@@ -206,5 +198,5 @@ void i2c_tx_stop(void)
     /* clear interrupt flag, issue stop command (cleared automatically) */
     TWCR |= (1 << TWINT) | (1 << TWSTO);
 
-    while (!(TWCR & (1 << TWSTO))); // wait until stop transmitted
+    while ((TWCR & (1 << TWSTO))); // wait until stop transmitted
 }
